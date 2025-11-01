@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jade Leaf Teahouse - Authentic Asian cuisine, premium teas, handmade dumplings, and traditional mochi in Rocky Top, TN. Experience tranquility in every sip and bite.">
+    <meta name="keywords" content="tea house, asian restaurant, dumplings, mochi, premium tea, dim sum, Rocky Top TN">
+    <title>Jade Leaf Teahouse - Authentic Asian Cuisine & Premium Teas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d5016;
+            --primary-dark: #1a3309;
+            --secondary: #8b7355;
+            --accent: #c9a961;
+            --logo-color: #3d6b1f;
+            --bg-light: #fff9f5;
+            --bg-white: #ffffff;
+            --text-dark: #2d2d2d;
+            --text-light: #666666;
+            --border: #ffe8d6;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+            --wood-brown: #8b7355;
+            --wood-dark: #6b5744;
+            --tea-green: #7d9b6f;
+        }
+
+        @supports (view-transition-name: none) {
+            ::view-transition-old(root),
+            ::view-transition-new(root) {
+                animation-duration: 0.5s;
+            }
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--bg-light);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        nav {
+            background: 
+                linear-gradient(135deg, rgba(255, 249, 245, 0.98) 0%, rgba(255, 232, 214, 0.98) 100%);
+            padding: 16px 24px;
+            box-shadow: 0 2px 12px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--logo-color), var(--accent), var(--logo-color)) 1;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--logo-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .nav-logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--logo-color);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus {
+            color: var(--logo-color);
+            background: var(--bg-light);
+        }
+
+        .nav-links a.active {
+            color: var(--logo-color);
+            background: var(--bg-light);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--logo-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-white);
+            box-shadow: -4px 0 24px var(--shadow);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 80px 24px 24px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu-links li {
+            margin-bottom: 8px;
+        }
+
+        .mobile-menu-links a {
+            display: block;
+            padding: 16px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .mobile-menu-links a:hover,
+        .mobile-menu-links a:focus {
+            background: var(--bg-light);
+            color: var(--logo-color);
+            border-color: var(--logo-color);
+        }
+
+        .mobile-menu-links a.active {
+            background: var(--logo-color);
+            color: white;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 8px;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-close:hover,
+        .mobile-menu-close:focus {
+            color: var(--logo-color);
+            transform: rotate(90deg);
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: 
+                linear-gradient(rgba(45, 80, 22, 0.7), rgba(26, 51, 9, 0.8)),
+                url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=1600&h=1200&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h2 {
+            font-size: clamp(36px, 8vw, 72px);
+            margin-bottom: 24px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 3vw, 28px);
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Noto Serif JP', serif;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            margin-bottom: 32px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #d4b770);
+            color: white;
+            box-shadow: 0 6px 24px rgba(201, 169, 97, 0.4);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(201, 169, 97, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator i {
+            font-size: 32px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .section {
+            padding: 80px 20px;
+            scroll-margin-top: 80px;
+        }
+
+        .section-light {
+            background: var(--bg-white);
+        }
+
+        .section-dark {
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            color: var(--logo-color);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-header p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .featured-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 32px var(--shadow-hover);
+            border-color: var(--logo-color);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .featured-content {
+            padding: 24px;
+        }
+
+        .featured-content h3 {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .featured-content p {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .featured-content .btn {
+            font-size: 16px;
+            padding: 12px 24px;
+        }
+
+        .story-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+        }
+
+        .story-content h2 {
+            font-size: clamp(32px, 4vw, 42px);
+            color: var(--logo-color);
+            margin-bottom: 24px;
+        }
+
+        .story-content p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 32px var(--shadow-hover);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--logo-color), var(--tea-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 36px;
+        }
+
+        .value-card h3 {
+            font-size: 22px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .value-card p {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: 
+                linear-gradient(rgba(45, 80, 22, 0.9), rgba(26, 51, 9, 0.95)),
+                url('https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=1600&h=600&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: 24px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .cta-section p {
+            font-size: clamp(18px, 2.5vw, 24px);
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 60px 20px 24px;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--tea-green), var(--accent));
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover,
+        .social-links a:focus {
+            background: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+        }
+
+        .call-now-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, var(--accent), #d4b770);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 6px 24px rgba(201, 169, 97, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        .call-now-btn:hover,
+        .call-now-btn:focus {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 32px rgba(201, 169, 97, 0.7);
+        }
+
+        .call-now-btn i {
+            font-size: 20px;
+            animation: ring 1.5s infinite;
+        }
+
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background: linear-gradient(135deg, var(--logo-color), var(--tea-green));
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(61, 107, 31, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            cursor: pointer;
+            border: none;
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top-btn:hover,
+        .scroll-top-btn:focus {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 24px rgba(61, 107, 31, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 6px 24px rgba(201, 169, 97, 0.5);
+            }
+            50% {
+                box-shadow: 0 6px 32px rgba(201, 169, 97, 0.7);
+            }
+        }
+
+        @keyframes ring {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            10%, 30% {
+                transform: rotate(-15deg);
+            }
+            20%, 40% {
+                transform: rotate(15deg);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .story-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .story-image {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                min-height: 80vh;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .call-now-btn {
+                bottom: 24px;
+                right: 24px;
+                width: 60px;
+                height: 60px;
+                padding: 0;
+                justify-content: center;
+                border-radius: 50%;
+            }
+
+            .call-now-btn span {
+                display: none;
+            }
+
+            .scroll-top-btn {
+                bottom: 96px;
+                left: 24px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .call-now-btn {
+                right: 16px;
+                bottom: 16px;
+            }
+
+            .scroll-top-btn {
+                left: 16px;
+                bottom: 88px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .call-now-btn,
+            .call-now-btn i,
+            .scroll-indicator {
+                animation: none !important;
+            }
+
+            .hero {
+                background-attachment: scroll;
+            }
+
+            .cta-section {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="./index.html" class="nav-logo" aria-label="Jade Leaf Teahouse home">
+                <div class="nav-logo-icon">
+                    <i class="fas fa-leaf" aria-hidden="true"></i>
+                </div>
+                <h1>Jade Leaf Teahouse</h1>
+            </a>
+            <ul class="nav-links">
+                <li><a href="./index.html" class="active">Home</a></li>
+                <li><a href="./menu.html">Menu</a></li>
+                <li><a href="./about.html">Our Story</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-overlay"></div>
+    <nav class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+        <button class="mobile-menu-close" aria-label="Close mobile menu">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <ul class="mobile-menu-links">
+            <li><a href="./index.html" class="active">Home</a></li>
+            <li><a href="./menu.html">Menu</a></li>
+            <li><a href="./about.html">Our Story</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <h2 id="hero-title">Welcome to Jade Leaf Teahouse</h2>
+                <p class="hero-subtitle">Tranquility in Every Sip, Tradition in Every Bite</p>
+                <p>Experience authentic Asian cuisine and premium teas crafted with care and served with heart. From handmade dumplings to ceremonial matcha, every dish tells a story.</p>
+                <div class="cta-buttons">
+                    <a href="./menu.html" class="btn btn-primary">
+                        <i class="fas fa-utensils" aria-hidden="true"></i>
+                        <span>View Our Menu</span>
+                    </a>
+                    <a href="./contact.html" class="btn btn-secondary">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Visit Us</span>
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator" aria-hidden="true">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <section class="section section-light" id="featured">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Signature Offerings</h2>
+                    <p>Discover our most beloved dishes and premium tea selections</p>
+                </div>
+                <div class="featured-grid">
+                    <article class="featured-card">
+                        <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&h=400&fit=crop" alt="Premium ceremonial matcha tea" class="featured-image" loading="lazy">
+                        <div class="featured-content">
+                            <h3>Premium Teas</h3>
+                            <p>From ceremonial matcha to rare oolongs, our tea selection is curated from the finest gardens across Asia. Each cup is a journey to tranquility.</p>
+                            <a href="./menu.html#tea" class="btn btn-primary">
+                                <span>Explore Teas</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="featured-card">
+                        <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600&h=400&fit=crop" alt="Handmade dumplings" class="featured-image" loading="lazy">
+                        <div class="featured-content">
+                            <h3>Handmade Dumplings</h3>
+                            <p>Our dumplings are crafted fresh daily using traditional techniques passed down through generations. Every fold is a work of art.</p>
+                            <a href="./menu.html#dumplings" class="btn btn-primary">
+                                <span>View Dumplings</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="featured-card">
+                        <img src="https://images.unsplash.com/photo-1582716401301-b2407dc7563d?w=600&h=400&fit=crop" alt="Assorted mochi desserts" class="featured-image" loading="lazy">
+                        <div class="featured-content">
+                            <h3>Artisan Mochi</h3>
+                            <p>Traditional Japanese mochi and Asian sweets made with the finest ingredients. The perfect ending to your meal or afternoon treat.</p>
+                            <a href="./menu.html#mochi" class="btn btn-primary">
+                                <span>Sweet Treats</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-dark" id="story">
+            <div class="container">
+                <div class="story-section">
+                    <img src="https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=800&h=600&fit=crop" alt="Traditional Asian tea ceremony" class="story-image" loading="lazy">
+                    <div class="story-content">
+                        <h2>Our Story</h2>
+                        <p>Jade Leaf Teahouse was born from a passion for authentic Asian cuisine and the timeless tradition of tea culture. We believe that food is more than sustenance—it's an experience that brings people together.</p>
+                        <p>Every recipe is crafted with care, using traditional methods and the finest ingredients. From our ceremonial teas to our handmade dumplings, we honor the heritage of Asian culinary arts while creating new memories.</p>
+                        <p>Our teahouse is a sanctuary where you can slow down, savor the moment, and find tranquility in every sip and bite.</p>
+                        <a href="./about.html" class="btn btn-primary">
+                            <span>Learn More About Us</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-light" id="values">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What Makes Us Special</h2>
+                    <p>Our commitment to quality, authenticity, and community</p>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-leaf" aria-hidden="true"></i>
+                        </div>
+                        <h3>Fresh Ingredients</h3>
+                        <p>We source the finest, freshest ingredients daily to ensure every dish meets our high standards.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
+                        </div>
+                        <h3>Handcrafted Daily</h3>
+                        <p>Our dumplings and dishes are made fresh by hand each day using traditional techniques.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-crown" aria-hidden="true"></i>
+                        </div>
+                        <h3>Premium Quality</h3>
+                        <p>From ceremonial grade matcha to authentic ingredients, we never compromise on quality.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </div>
+                        <h3>Made with Love</h3>
+                        <p>Every dish is prepared with care, passion, and respect for culinary traditions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Experience Jade Leaf?</h2>
+                <p>Visit us today and discover your new favorite spot for authentic Asian cuisine and premium teas.</p>
+                <div class="cta-buttons">
+                    <a href="./menu.html" class="btn btn-primary">
+                        <i class="fas fa-utensils" aria-hidden="true"></i>
+                        <span>View Full Menu</span>
+                    </a>
+                    <a href="./contact.html" class="btn btn-secondary">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>Call to Order</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Jade Leaf Teahouse</h3>
+                <p>Authentic Asian cuisine and premium teas served with tradition and care.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Visit our Facebook page" title="Facebook">
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" aria-label="Visit our Instagram page" title="Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" aria-label="Visit our Yelp page" title="Yelp">
+                        <i class="fab fa-yelp" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./menu.html">Menu</a></li>
+                    <li><a href="./about.html">Our Story</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Hours</h3>
+                <p>Monday - Saturday<br>11:00 AM - 8:00 PM</p>
+                <p style="margin-top: 12px;">Sunday<br>Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>255 South Main St<br>Rocky Top, TN 37769</p>
+                <p style="margin-top: 12px;">
+                    <a href="tel:5551234567">(555) 123-4567</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Jade Leaf Teahouse - All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <a href="tel:5551234567" class="call-now-btn" aria-label="Call Jade Leaf Teahouse now">
+        <i class="fas fa-phone" aria-hidden="true"></i>
+        <span>Call Now!</span>
+    </a>
+
+    <button class="scroll-top-btn" aria-label="Scroll to top" title="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const body = document.body;
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+            mobileMenuToggle.classList.add('active');
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            body.style.overflow = '';
+        }
+
+        mobileMenuToggle.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-menu-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.querySelector('.scroll-top-btn');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // View Transitions API support
+        function navigate(url) {
+            if (!document.startViewTransition) {
+                window.location.href = url;
+                return;
+            }
+
+            document.startViewTransition(() => {
+                window.location.href = url;
+            });
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.featured-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Skip link functionality
+        document.querySelector('.skip-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            const main = document.getElementById('main-content');
+            main.focus();
+            main.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
